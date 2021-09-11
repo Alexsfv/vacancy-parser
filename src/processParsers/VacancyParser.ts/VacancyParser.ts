@@ -22,8 +22,7 @@ export default class VacancyParser extends Parser {
         super()
         this.threads = threads
         this.previewGroups = previewGroups
-        // this.previews = this.getPreviews(previewGroups)
-        this.previews = this.getPreviews(previewGroups).slice(0, 3)
+        this.previews = this.getPreviews(previewGroups)
         this.data = new DataProcessor()
         this.performance = new Performance()
         this.htmlParser = new InfoVacancyParser()

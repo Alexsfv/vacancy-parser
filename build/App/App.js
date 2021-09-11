@@ -61,12 +61,11 @@ var App = /** @class */ (function () {
         this.deep = false;
         this.uploadData = {};
         this.uploadResults = function () { return __awaiter(_this, void 0, void 0, function () {
-            var hasDir, filehandle;
+            var filehandle;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        hasDir = fs.existsSync('./result');
-                        if (!!hasDir) return [3 /*break*/, 2];
+                        if (!!fs.existsSync('./result')) return [3 /*break*/, 2];
                         return [4 /*yield*/, fsPromises.mkdir('./result')];
                     case 1:
                         _a.sent();
@@ -74,17 +73,7 @@ var App = /** @class */ (function () {
                     case 2: return [4 /*yield*/, fsPromises.open('./result/data.json', 'w')];
                     case 3:
                         filehandle = _a.sent();
-                        return [4 /*yield*/, filehandle.writeFile(JSON.stringify(this.uploadData, null, '\t'))
-                            // fsPromises.('./parsed.json', JSON.stringify(this.uploadData, null, '\t'))
-                            // console.log('\n---PARSE FINISHED---');
-                            // return fs.writeFile('./parsed.json', JSON.stringify(this.uploadData, null, '\t'), (err) => {
-                            //     if (err) {
-                            //         console.log('Upload error: ', err);
-                            //         throw err
-                            //     }
-                            //     console.log('\n---PARSE FINISHED---');
-                            // })
-                        ];
+                        return [4 /*yield*/, filehandle.writeFile(JSON.stringify(this.uploadData, null, '\t'))];
                     case 4:
                         _a.sent();
                         return [2 /*return*/];

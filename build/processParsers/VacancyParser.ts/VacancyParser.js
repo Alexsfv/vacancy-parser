@@ -149,8 +149,7 @@ var VacancyParser = /** @class */ (function (_super) {
         };
         _this.threads = threads;
         _this.previewGroups = previewGroups;
-        // this.previews = this.getPreviews(previewGroups)
-        _this.previews = _this.getPreviews(previewGroups).slice(0, 3);
+        _this.previews = _this.getPreviews(previewGroups);
         _this.data = new DataProcessor();
         _this.performance = new Performance_1["default"]();
         _this.htmlParser = new infoVacancy_1["default"]();
