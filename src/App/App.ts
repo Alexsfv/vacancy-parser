@@ -2,12 +2,13 @@ import PreviewParser from '../processParsers/PreviewParser/PreviewParser'
 import VacancyParser from '../processParsers/VacancyParser.ts/VacancyParser'
 import * as fsPromises from 'fs/promises'
 import * as fs from 'fs'
-import { AppOptions, IApp } from './types'
+import { AppOptions, IApp, Task, TaskResult } from './types'
+import { PreviewParserResult } from '../processParsers/PreviewParser/types'
 
 export default class App implements IApp {
     previewThreads = 1
     vacancyThreads = 1
-    tasks = []
+    tasks = [] as Task[]
     deep = false
     uploadData = {}
 
@@ -24,12 +25,12 @@ export default class App implements IApp {
     }
 
     async start() {
-        const taskResults = []
+        const taskResults = [] as TaskResult[]
         let currentIdx = 0
 
         while (currentIdx < this.tasks.length) {
-            const task = this.tasks[currentIdx] as any
-            let pageData = {}
+            const task: Task = this.tasks[currentIdx]
+            let pageData = null as PreviewParserResult | null
 
             const previewParser = new PreviewParser({ threads: this.previewThreads, search: task.search })
             const preview = await previewParser.start()
@@ -38,7 +39,10 @@ export default class App implements IApp {
             if (this.deep) {
                 const vacancyParser = new VacancyParser({ threads: this.vacancyThreads, previewGroups: preview.pagesData })
                 const deepData = await vacancyParser.start()
-                pageData = deepData
+                pageData = {
+                    ...preview,
+                    pagesData: deepData,
+                }
             }
             taskResults.push({
                 taskInfo: { ...task },
@@ -55,8 +59,12 @@ export default class App implements IApp {
 
     uploadResults = async () => {
         if (!fs.existsSync('./result')) await fsPromises.mkdir('./result')
-        const filehandle = await fsPromises.open('./result/data.json', 'w')
-        await filehandle.writeFile(JSON.stringify(this.uploadData, null, '\t'))
+
+        const filehandleRes = await fsPromises.open('./result/data.json', 'w')
+        await filehandleRes.writeFile(JSON.stringify(this.uploadData, null, '\t'))
+
+        const filehandleDemo = await fsPromises.open('./demo/data.json', 'w')
+        await filehandleDemo.writeFile(JSON.stringify(this.uploadData, null, '\t'))
     }
 
     stop() {

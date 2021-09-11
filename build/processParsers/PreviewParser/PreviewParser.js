@@ -171,7 +171,8 @@ var PreviewParcer = /** @class */ (function (_super) {
                         pageLinks = $('[data-qa="pager-page"]');
                         lastPageLink = pageLinks[pageLinks.length - 1];
                         content = $(lastPageLink).find('span').text();
-                        this.maxPage = Number(content) ? Number(content) - 1 : 0;
+                        // this.maxPage = Number(content) ? Number(content)-1 : 0
+                        this.maxPage = 1;
                         return [2 /*return*/];
                 }
             });

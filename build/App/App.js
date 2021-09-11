@@ -61,7 +61,7 @@ var App = /** @class */ (function () {
         this.deep = false;
         this.uploadData = {};
         this.uploadResults = function () { return __awaiter(_this, void 0, void 0, function () {
-            var filehandle;
+            var filehandleRes, filehandleDemo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -72,9 +72,15 @@ var App = /** @class */ (function () {
                         _a.label = 2;
                     case 2: return [4 /*yield*/, fsPromises.open('./result/data.json', 'w')];
                     case 3:
-                        filehandle = _a.sent();
-                        return [4 /*yield*/, filehandle.writeFile(JSON.stringify(this.uploadData, null, '\t'))];
+                        filehandleRes = _a.sent();
+                        return [4 /*yield*/, filehandleRes.writeFile(JSON.stringify(this.uploadData, null, '\t'))];
                     case 4:
+                        _a.sent();
+                        return [4 /*yield*/, fsPromises.open('./demo/data.json', 'w')];
+                    case 5:
+                        filehandleDemo = _a.sent();
+                        return [4 /*yield*/, filehandleDemo.writeFile(JSON.stringify(this.uploadData, null, '\t'))];
+                    case 6:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -97,7 +103,7 @@ var App = /** @class */ (function () {
                     case 1:
                         if (!(currentIdx < this.tasks.length)) return [3 /*break*/, 5];
                         task = this.tasks[currentIdx];
-                        pageData = {};
+                        pageData = null;
                         previewParser = new PreviewParser_1["default"]({ threads: this.previewThreads, search: task.search });
                         return [4 /*yield*/, previewParser.start()];
                     case 2:
@@ -108,7 +114,7 @@ var App = /** @class */ (function () {
                         return [4 /*yield*/, vacancyParser.start()];
                     case 3:
                         deepData = _a.sent();
-                        pageData = deepData;
+                        pageData = __assign(__assign({}, preview), { pagesData: deepData });
                         _a.label = 4;
                     case 4:
                         taskResults.push({
