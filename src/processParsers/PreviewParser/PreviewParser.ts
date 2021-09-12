@@ -87,7 +87,7 @@ export default class PreviewParcer extends Parser {
         const content = $(lastPageLink).find('span').text()
 
         this.maxPage = Number(content) ? Number(content)-1 : 0
-        // this.maxPage = 1
+        // this.maxPage = Number(content) > 10 ? 9 : Number(content)
     }
 }
 

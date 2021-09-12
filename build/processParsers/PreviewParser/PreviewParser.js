@@ -172,7 +172,7 @@ var PreviewParcer = /** @class */ (function (_super) {
                         lastPageLink = pageLinks[pageLinks.length - 1];
                         content = $(lastPageLink).find('span').text();
                         // this.maxPage = Number(content) ? Number(content)-1 : 0
-                        this.maxPage = 1;
+                        this.maxPage = Number(content) > 10 ? 9 : Number(content);
                         return [2 /*return*/];
                 }
             });
